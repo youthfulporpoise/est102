@@ -91,16 +91,23 @@ int main() {
             puts("Sum: "); display_matrix(C);
             break;
         } case (2): {
-            size_t m, n;
-            printf("<row> <column>: ");
-            scanf("%zu %zu", &m, &n);
-            Matrix A = {.m = m, .n = n};
-            Matrix B = {.m = m, .n = n};
-            Matrix C = {.m = m, .n = n};
+            size_t m_a, n_a, m_b, n_b;
+            printf("A <row> <column>: ");
+            scanf("%zu %zu", &m_a, &n_a);
+            Matrix A = {.m = m_a, .n = n_a};
             puts("Matrix A"); populate_matrix(&A);
+            printf("B <row> <column>: ");
+            scanf("%zu %zu", &m_b, &n_b);
+            Matrix B = {.m = m_b, .n = n_b};
             puts("Matrix B"); populate_matrix(&B);
+            if (m_a != n_b) {
+                puts("The number of rows of A and columns of B must be equal.");
+                return 1;
+            }
+            Matrix C = {.m = m_a, .n = n_b};
             multiply_matrix(A, B, &C);
             puts("Product: "); display_matrix(C);
+            break;
         } case (3): {
             size_t m, n;
             printf("<row> <column>: ");
@@ -110,6 +117,7 @@ int main() {
             puts("Matrix X"); populate_matrix(&X);
             transpose_matrix(X, &C);
             puts("Tranpose: "); display_matrix(C);
+            break;
         } default: {
             puts("Exiting.");
             return 0;
