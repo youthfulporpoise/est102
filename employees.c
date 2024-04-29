@@ -30,7 +30,7 @@ int main() {
 
     puts("");
     for (int i = 0; i < n; ++i) {
-        printf("%d: %s (%.2f)\n", empdb[i].id, empdb[i].name,
+        printf("%d: %s (₹%.2f)\n", empdb[i].id, empdb[i].name,
                                   empdb[i].salary);
     } puts("");
 
