@@ -26,7 +26,7 @@ void display_matrix(Matrix X) {
         printf("\t[ ");
         for (size_t j = 0; j < X.n; ++j) {
             printf("%*lld ", size, X.matrix[i][j]);
-        } puts(" ]");
+        } puts("]");
     }
 }
 
@@ -74,6 +74,7 @@ int main() {
            "\t(1) add two matrices;\n"
            "\t(2) multiply two matrices;\n"
            "\t(3) transpose a matrix.\n"
+           "\t(4) quit.\n"
            "Choice: ");
     scanf("%u", &choice);
 
@@ -100,7 +101,7 @@ int main() {
             scanf("%zu %zu", &m_b, &n_b);
             Matrix B = {.m = m_b, .n = n_b};
             puts("Matrix B"); populate_matrix(&B);
-            if (m_a != n_b) {
+            if (n_a != m_b) {
                 puts("The number of rows of A and columns of B must be equal.");
                 return 1;
             }
@@ -118,8 +119,11 @@ int main() {
             transpose_matrix(X, &C);
             puts("Tranpose: "); display_matrix(C);
             break;
+        } case (4): {
+            puts("Quitting.");
+            return 0;
         } default: {
-            puts("Exiting.");
+            puts("The choice was not understood.");
             return 0;
         }
     }
