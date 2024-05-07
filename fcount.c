@@ -11,17 +11,21 @@ int main() {
                 words++;
                 break;
             case ('\n'):
+                words++;
                 lines++;
                 break;
             default:
                 characters++;
         }
     } fclose(f);
-    printf("Characters : %zu\n"
-           "Words      : %zu\n"
-           "Lines      : %zu\n",
-           characters,
-           characters > 0 ? words : 0,
-           characters > 0 ? lines : 0);
+
+    f = fopen(FILENAME, "a");
+    fprintf(f, "\n"
+            "Characters : %zu\n"
+            "Words      : %zu\n"
+            "Lines      : %zu\n",
+            characters,
+            characters > 0 ? words : 0,
+            characters > 0 ? lines : 0);
     return 0;
 }

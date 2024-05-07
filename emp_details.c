@@ -1,15 +1,18 @@
 #include <stdio.h>
 #include <stdbool.h>
 #include <string.h>
-#define C_SIZE 128
+#include <stdlib.h>
 
 int main() {
+    size_t C_SIZE;
+    printf("Address size: "); scanf("\n%zu", &C_SIZE);
+    puts("");
 
     enum addr_type {WORK, HOME, TEMP};
     union addr {
-        char work_addr[C_SIZE];
-        char home_addr[C_SIZE];
-        char temp_addr[C_SIZE];
+        char *work_addr;
+        char *home_addr;
+        char *temp_addr;
     };
 
     struct details {
@@ -25,7 +28,7 @@ int main() {
     scanf("\n%63[^\n]", details.name);
 
     printf("DOB: ");
-    scanf("%u-%u-%u",
+    scanf("\n%u-%u-%u",
         details.dob + 0, details.dob + 1, details.dob + 2);
 
     while (true) {
@@ -43,35 +46,35 @@ int main() {
     char address_type[10], *address;
     switch (details.addr_type) {
         case (WORK): 
-            scanf("\n%[^\n]", details.addr.work_addr);
             address = details.addr.work_addr;
             strcpy(address_type, "Work");
             break;
         case (HOME):
-            scanf("\n%[^\n]", details.addr.home_addr);
             address = details.addr.home_addr;
             strcpy(address_type, "Permament");
             break;
         case (TEMP):
-            scanf("\n%[^\n]", details.addr.temp_addr);
             address = details.addr.temp_addr;
             strcpy(address_type, "Temporary");
             break;
-    }
+    } 
+    address = calloc(sizeof(char), C_SIZE);
+    scanf("\n%[^\n]", address);
 
     printf("State (code): ");
-    scanf("%2s", details.state);
+    scanf("\n%2s", details.state);
 
     printf("Pincode: ");
-    scanf("%6d", &details.pincode);
+    scanf("\n%6d", &details.pincode);
 
     /* Display details. */
     puts("");
-    printf("%s (b. %u-%u-%u)\n"
+    printf("%s (b. %02u-%02u-%04u)\n"
            "%s, %2s (%06d) (%s)\n",
            details.name,
            details.dob[0], details.dob[1], details.dob[2],
            address, details.state, details.pincode, address_type);
 
+    free(address);
     return 0;
 }
