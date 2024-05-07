@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdbool.h>
+#include <string.h>
 #define C_SIZE 128
 
 int main() {
@@ -21,18 +22,16 @@ int main() {
     } details;
 
     printf("Name: ");
-    scanf("%63[^\n]", details.name);
+    scanf("\n%63[^\n]", details.name);
 
-    puts("");
     printf("DOB: ");
     scanf("%u-%u-%u",
         details.dob + 0, details.dob + 1, details.dob + 2);
 
-    puts("");
     while (true) {
         printf("\t(0) Work\n"
-               "\t(0) Home\n"
-               "\t(0) Temporary\n"
+               "\t(1) Home\n"
+               "\t(2) Temporary\n"
                "Address type (0-2): ");
         scanf("%u", &details.addr_type);
         if (details.addr_type >= 0 && details.addr_type <= 2)
@@ -40,30 +39,39 @@ int main() {
         else continue;
     }
 
-    puts("");
     printf("Address: ");
+    char address_type[10], *address;
     switch (details.addr_type) {
         case (WORK): 
-            // details.addr.work_addr; 
-            scanf("%[^\n]", details.addr.work_addr);
+            scanf("\n%[^\n]", details.addr.work_addr);
+            address = details.addr.work_addr;
+            strcpy(address_type, "Work");
             break;
         case (HOME):
-            // details.addr.home_addr = ""; 
-            scanf("%[^\n]", details.addr.home_addr);
+            scanf("\n%[^\n]", details.addr.home_addr);
+            address = details.addr.home_addr;
+            strcpy(address_type, "Permament");
             break;
         case (TEMP):
-            // details.addr.temp_addr = ""; 
-            scanf("%[^\n]", details.addr.temp_addr);
+            scanf("\n%[^\n]", details.addr.temp_addr);
+            address = details.addr.temp_addr;
+            strcpy(address_type, "Temporary");
             break;
     }
 
-    puts("");
     printf("State (code): ");
     scanf("%2s", details.state);
 
-    puts("");
     printf("Pincode: ");
     scanf("%6d", &details.pincode);
+
+    /* Display details. */
+    puts("");
+    printf("%s (b. %u-%u-%u)\n"
+           "%s, %2s (%06d) (%s)\n",
+           details.name,
+           details.dob[0], details.dob[1], details.dob[2],
+           address, details.state, details.pincode, address_type);
 
     return 0;
 }
