@@ -36,7 +36,7 @@ int main() {
                "\t(1) Home\n"
                "\t(2) Temporary\n"
                "Address type (0-2): ");
-        scanf("%u", &details.addr_type);
+        scanf("\n%u", &details.addr_type);
         if (details.addr_type >= 0 && details.addr_type <= 2)
             break;
         else continue;
@@ -46,20 +46,21 @@ int main() {
     char address_type[10], *address;
     switch (details.addr_type) {
         case (WORK): 
+            details.addr.work_addr = calloc(sizeof(char), C_SIZE);
             address = details.addr.work_addr;
             strcpy(address_type, "Work");
             break;
         case (HOME):
+            details.addr.home_addr = calloc(sizeof(char), C_SIZE);
             address = details.addr.home_addr;
             strcpy(address_type, "Permament");
             break;
         case (TEMP):
+            details.addr.temp_addr = calloc(sizeof(char), C_SIZE);
             address = details.addr.temp_addr;
             strcpy(address_type, "Temporary");
             break;
-    } 
-    address = calloc(sizeof(char), C_SIZE);
-    scanf("\n%[^\n]", address);
+    } scanf("\n%[^\n]", address);
 
     printf("State (code): ");
     scanf("\n%2s", details.state);
@@ -70,7 +71,7 @@ int main() {
     /* Display details. */
     puts("");
     printf("%s (b. %02u-%02u-%04u)\n"
-           "%s, %2s (%06d) (%s)\n",
+           "%s, %2s (%d) (%s)\n",
            details.name,
            details.dob[0], details.dob[1], details.dob[2],
            address, details.state, details.pincode, address_type);
